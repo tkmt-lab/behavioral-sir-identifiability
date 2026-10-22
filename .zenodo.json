@@ -1,0 +1,28 @@
+{
+  "title": "Global identifiability of a behavioral SIR model for every integer saturation exponent k >= 2",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "Article (version 1.1) with exact-check code. For the behavioral SIR model S' = -beta S I/(1+alpha I)^k, I' = beta S I/(1+alpha I)^k - gamma I, R' = gamma I, observed through I(t) with known total population, the article proves global structural identifiability for every fixed integer k >= 2 (Conjecture 2 of Pant, Saucedo and Pogudin, integer case). The proof combines a closed form of the minimal input-output equation and an explicit rational inverse of its coefficients with a lemma that the reduced two-state model has no nonconstant rational first integral, and uses results of Ovchinnikov, Pogudin and Thompson. The proof is in prose; it is not formalized in a proof assistant and has not undergone human expert review. Exact computer-algebra checks for finitely many k accompany it. Non-integer or unknown k and estimation from noisy data are not covered. Text and data: CC BY 4.0; code: Apache 2.0.",
+  "creators": [
+    {
+      "name": "Tatsuhiko Takimoto",
+      "affiliation": "Independent researcher"
+    }
+  ],
+  "version": "1.0.0",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "structural identifiability",
+    "epidemic models",
+    "behavioral SIR",
+    "input-output equations",
+    "differential algebra"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/tkmt-lab/behavioral-sir-identifiability",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

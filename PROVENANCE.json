@@ -1,0 +1,152 @@
+{
+  "version": "1.0.0",
+  "status": "LOCAL_RELEASE_CANDIDATE",
+  "proposed_repository": "https://github.com/tkmt-lab/behavioral-sir-identifiability",
+  "repository_name_decided": false,
+  "uploaded": false,
+  "DOI": null,
+  "new_Lean_runs": 0,
+  "created_at": "2026-10-22T05:13:13+00:00",
+  "files": [
+    {
+      "path": ".github/workflows/verify.yml",
+      "sha256": "155e9876034f2984f61f1c7285b910fde3f7a09f633dedbeaa8b529988274926",
+      "bytes": 1211
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "7f561e818179fc51a030a0eefde6f76849b654a7105adef34ce3cbc27573fffe",
+      "bytes": 46
+    },
+    {
+      "path": ".zenodo.json",
+      "sha256": "6c1103a3f26e9be53f68a921faf0afe390afbbe59c74296d6c9e314890d6539e",
+      "bytes": 1609
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "a8c59812f8f4dcdea1b952d9d4fbc7d8d758a75219f76056185814afc14e389a",
+      "bytes": 2483
+    },
+    {
+      "path": "Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "path": "CC-BY-4.0.txt",
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "bytes": 18657
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "cf50e627e9628a12ea148b825168858a0cdff66ebafe5e12288113e80fa48606",
+      "bytes": 405
+    },
+    {
+      "path": "CITATION.cff",
+      "sha256": "5515eb2333a6df8d5cc7d3bbcf3eee7d54e630331f11b6ca4e83101b4b34d382",
+      "bytes": 946
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "fbd372fda9d3bffc3292466f5fd10deecb8a3ab29f9b1f969c1db80de5c475d4",
+      "bytes": 210
+    },
+    {
+      "path": "README.md",
+      "sha256": "2c9a6df04d2143202ede9df2f8e44b93068517187fa756f4ff38eb2fbf4f79a4",
+      "bytes": 5861
+    },
+    {
+      "path": "VERIFICATION-RECORD.md",
+      "sha256": "365b145a933019dee3adc43668d6bf7dd3c031b387f19ed4b95dcfb474961780",
+      "bytes": 7894
+    },
+    {
+      "path": "check_packet.py",
+      "sha256": "1053601a5cfe20786de7e689acbd9b3db8254b406b9a0ec43518c644779dd3d2",
+      "bytes": 7283
+    },
+    {
+      "path": "claims.json",
+      "sha256": "9c671dc95aeeb9f9afbf1cf730e8eb3597f9be51b90eb897b9e2f42ec35ddf4f",
+      "bytes": 11033
+    },
+    {
+      "path": "exact/check_exact.py",
+      "sha256": "d5723d141647c2bd44e59585276b4185c4abbe7a0986aa9edd223f18f80188e9",
+      "bytes": 8766
+    },
+    {
+      "path": "independent/check_article_algebra.py",
+      "sha256": "a74eecd03d31b94df1e09eefc054675a870c5657c671c5cbad13b1d09b16f306",
+      "bytes": 8104
+    },
+    {
+      "path": "independent/check_proof_algebra.py",
+      "sha256": "b7c3b0afae0c4f830e45d4fb1237047f504c886d5aa402cb78c6bf18f7161d05",
+      "bytes": 7548
+    },
+    {
+      "path": "independent/check_supplement_s9.py",
+      "sha256": "3f1e811dba0b94225e224989ca374fc4bf61f23e170644bb22d235d883b278e6",
+      "bytes": 1196
+    },
+    {
+      "path": "paper-behavioral-sir-v1.1-en.pdf",
+      "sha256": "1e1b990743b7e6854bf7efeeecf774c58b19e8bb5d9856378ca5b08fafc70661",
+      "bytes": 113018
+    },
+    {
+      "path": "paper-behavioral-sir-v1.1-en.tex",
+      "sha256": "c84d2d8e0572f900ee4070ff7da4e6028e98f572b6d5263dcb50dd256f9013a1",
+      "bytes": 27701
+    },
+    {
+      "path": "pdf-validation.json",
+      "sha256": "d0735c907d426ee721ecf1d704f9a039971b36d5109023d61d17cb3eb458f34f",
+      "bytes": 649
+    },
+    {
+      "path": "publication_privacy.py",
+      "sha256": "dc3e4c0d8b7087dedba151ae4072408c6b9e2e14b3f3b91eeb1d6b60f8fee3d3",
+      "bytes": 9022
+    },
+    {
+      "path": "reproduce.py",
+      "sha256": "19de84f383b37976c12e09d87b4ac2f4d1f311f21a7d5ebc17cc18c7c72ef451",
+      "bytes": 5508
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "30dde02b4ba692826a56f7f365630b8451fb3c2c4f830924a7fabfd8c1dfc5c7",
+      "bytes": 28
+    },
+    {
+      "path": "results/check_article_algebra.out",
+      "sha256": "b8f2a381733c9a84475a3458eccc51b1a1c5833f39b96f6084322b49abaca845",
+      "bytes": 3140
+    },
+    {
+      "path": "results/check_proof_algebra.out",
+      "sha256": "492612ac81e6f1f58b3ce3e0279eb2528767332fbeeadfc479f4894da8479d80",
+      "bytes": 1759
+    },
+    {
+      "path": "results/check_supplement_s9.out",
+      "sha256": "dcd54b4df28019c055556791c816335e6e558d6e63dcb5836840f4cd5e30ae95",
+      "bytes": 72
+    },
+    {
+      "path": "results/exact-checks.jsonl",
+      "sha256": "5a1dede434da51eb9d0c63e371232f4fbe6aad81a6f1dc4339ed9c9824d27af8",
+      "bytes": 4071
+    },
+    {
+      "path": "source-derivatives.json",
+      "sha256": "fb25659b952857bc58cfc14047490b3be2304c8294df4e1bb905451b710a4c81",
+      "bytes": 2304
+    }
+  ]
+}

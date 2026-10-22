@@ -1,0 +1,44 @@
+{
+  "note": "Files whose public copy differs from the research original only by exact text replacements in docstrings and comments (internal labels and file names removed, equation-number key added); the replaced originals are not reproduced here. Code logic and numbers are unchanged.",
+  "records": [
+    {
+      "original_sha256": "81881d9f9b6aa2c5ae9e62a303ad1d47a13cff9b5bda7617226cd58a65888484",
+      "public": {
+        "path": "exact/check_exact.py",
+        "sha256": "d5723d141647c2bd44e59585276b4185c4abbe7a0986aa9edd223f18f80188e9",
+        "bytes": 8766
+      },
+      "replacements": 1,
+      "replacement_texts": [
+        "\"\"\"Exact elimination from the vector field; imports no other project code."
+      ]
+    },
+    {
+      "original_sha256": "0e31bdd7902afb90f2564a9661b34297626836bcf7ae36f3a9a7a58929869d9a",
+      "public": {
+        "path": "independent/check_article_algebra.py",
+        "sha256": "a74eecd03d31b94df1e09eefc054675a870c5657c671c5cbad13b1d09b16f306",
+        "bytes": 8104
+      },
+      "replacements": 3,
+      "replacement_texts": [
+        "\"\"\"Recomputation by a separate reader from the article text (draft version 1; same equation numbers as 1.1).",
+        "Written from the article text only (not from exact/check_exact.py or the proof notes).",
+        "Run: python3 -B independent/check_article_algebra.py   (needs sympy)"
+      ]
+    },
+    {
+      "original_sha256": "2aa0049a4582c0fedf125779818dedec7bdf928de6631376a161878004df7d0e",
+      "public": {
+        "path": "independent/check_proof_algebra.py",
+        "sha256": "b7c3b0afae0c4f830e45d4fb1237047f504c886d5aa402cb78c6bf18f7161d05",
+        "bytes": 7548
+      },
+      "replacements": 2,
+      "replacement_texts": [
+        "\"\"\"Checks of the written proof by a separate reader, written without reading exact/check_exact.py\nor its results. Equation numbers in labels and comments refer to the proof notes (not distributed):\n(3), (4) = article Eq. (4) before and after collecting terms; (6) = the values B(0,v), B(-1/alpha,v)\nof Lemma 2 (named Q here); (7) = article Eq. (5); (9) = Eq. (7); (10) = Eq. (8); (12) = Eq. (9).\nRun: python3 -B independent/check_proof_algebra.py   (needs sympy)\"\"\"",
+        "# 4. Lemma 5 of the article: ingredients (10), (12)"
+      ]
+    }
+  ]
+}

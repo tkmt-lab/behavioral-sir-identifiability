@@ -1,0 +1,37 @@
+name: Packet verification
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read          # read-only; the packet checks need no secrets
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20   # the checks take about half a minute
+    env:
+      OMP_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'   # keep the checkout free of __pycache__ (file-list checks)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Poppler gives pdftotext/pdfinfo for the PDF text and privacy checks.
+      - name: System dependencies
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
+      - name: Python dependencies
+        run: python3 -m pip install -r requirements.txt
+
+      - name: Packet file list, hashes, claim scopes and privacy
+        run: python3 -B check_packet.py
+
+      - name: Re-run the exact elimination and the separately written SymPy checks
+        run: python3 -B reproduce.py --output "$RUNNER_TEMP/reproduce.json"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reproduce-results
+          path: ${{ runner.temp }}/reproduce.json

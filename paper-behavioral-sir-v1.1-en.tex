@@ -1,0 +1,582 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{1em}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.13}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\C}{\mathbb C}
+\newcommand{\coef}[1]{[#1]P}
+\title{Global identifiability of a behavioral SIR model\newline
+for every integer saturation exponent $k\geq2$}
+\author{Tatsuhiko Takimoto\\\small Independent researcher}
+\date{Version 1.1 (draft), 22 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Pant, Saucedo and Pogudin studied a behavioral SIR model in which the
+transmission rate is divided by $(1+\alpha I)^k$, and conjectured that for
+$k\geq2$ it is globally structurally identifiable from continuous,
+noise-free observation of the number of infectious individuals $I(t)$,
+with the total initial population known. We prove this for every fixed
+integer $k\geq2$: generically, the parameters $\alpha,\beta,\gamma$ and the
+initial values of $S$, $I$ and $R$ are uniquely determined by $I(t)$. The
+proof has two parts. First, the minimal input--output equation is written
+in closed form for all $k$; its coefficients determine $\alpha$, $\gamma$
+and $\beta$ through rational formulas whose denominators are $k$ and
+$k(k-1)\alpha^2$, so no integer $k\geq2$ is exceptional. Second, a
+valuation argument shows that the two-state model obtained by eliminating
+$R$ has no nonconstant rational first integral; the argument uses only
+that $k\geq2$. Results of Ovchinnikov, Pogudin and Thompson then convert
+the coefficient statement into global identifiability. The proof is
+written in prose and is not formalized in a proof assistant. Exact
+computer-algebra checks for $k=1,\dots,12$, and a separately written
+check for $k=2,\dots,9$, agree with the general formulas; they are finite
+checks and do not replace the proof. Non-integer exponents, an unknown
+exponent, and estimation from discrete or noisy data are outside the
+scope of the result.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+Pant, Saucedo and Pogudin examined which epidemiological quantities are
+structurally identifiable in a range of compartmental models
+\cite{PSP}. In their Section~3.6 they consider a behavioral extension of
+the SIR model in which contacts decrease as infections increase,
+\begin{equation}
+ S'=-\frac{\beta SI}{(1+\alpha I)^k},\qquad
+ I'=\frac{\beta SI}{(1+\alpha I)^k}-\gamma I,\qquad
+ R'=\gamma I,
+ \label{eq:model}
+\end{equation}
+observed through $y=I$, with the total initial population
+$N_0=S(0)+I(0)+R(0)$ known. For $k=1$ they proved that $\alpha$,
+$\beta\gamma$ and $\alpha\gamma+\beta$ are globally identifiable while
+$\beta$ and $\gamma$ are only locally identifiable, the two-fold ambiguity
+being $(\beta,\gamma)\mapsto(\alpha\gamma,\beta/\alpha)$
+\cite[Theorem~3.8]{PSP}, \cite[Section~S8]{PSPsupp}. Using
+\mbox{StructuralIdentifiability.jl}, they found global identifiability for
+$k=2,3,4,5,10$ and $50$ \cite[Section~S9]{PSPsupp}, and they stated global identifiability for
+$k\geq2$ as Conjecture~2 of \cite{PSP}. Their Remark~1 in
+\cite[Section~S9]{PSPsupp} sketches why the property should hold for all
+sufficiently large $k$: after the substitution $A=(1+\alpha I)^k/\beta$,
+the parameters and initial conditions are rational functions of the
+output jet, whose denominators can vanish for at most finitely many
+values of $k$; the exceptional values are not determined.
+
+The tools we use are due to Ovchinnikov, Pogudin and Thompson \cite{OPT}.
+They showed that the coefficients of a monic characteristic presentation
+of the input--output ideal generate the field of input--output
+identifiable functions \cite[Corollary~5.7]{OPT}, and that input--output
+identifiability coincides with identifiability when the model has no
+rational first integrals \cite[Theorem~4.7]{OPT}. The second hypothesis
+is essential here: with all three states, $S+I+R$ is a rational first
+integral, so we work with the two-state model on the surface of known
+$N_0$.
+
+\paragraph{Result.}
+Theorem~\ref{thm:main} proves global identifiability for every fixed
+integer $k\geq2$. Its new ingredients are a closed form of the minimal
+input--output equation valid for all $k$, an explicit rational inverse of
+its coefficient map (Proposition~\ref{prop:coef}), and a lemma that the
+reduced model has no nonconstant rational first integral
+(Lemma~\ref{lem:noint}). The hypothesis $k\geq2$ is used essentially in
+these two places, each time through a single, visible fact: a coefficient $k(k-1)\alpha^2\gamma$ that
+vanishes for $k=1$, and a pole of order $k$ that cannot be a logarithmic
+derivative when $k\geq2$. Both facts are consistent with the $k=1$
+non-identifiability result of \cite{PSP}.
+
+\section{What is proved, and how}
+\label{sec:status}
+Table~\ref{tab:status} lists the claims of this article and their present
+basis. All proofs are written in prose; none is formalized in a proof
+assistant, and the article has not undergone human expert review. Who
+ran which check, and when, is recorded in the verification record that
+accompanies the article (\mbox{\texttt{VERIFICATION-RECORD.md}}).
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.30\linewidth}
+>{\raggedright\arraybackslash}p{.38\linewidth}
+>{\raggedright\arraybackslash}p{.24\linewidth}@{}}
+\toprule
+Claim & Basis & Range\\
+\midrule
+Input--output equation \eqref{eq:P}, its irreducibility and
+characteristic presentation (Section~\ref{sec:io}) & Elementary algebra
+(Gauss's lemma) and the definitions of \cite{OPT} & Every integer
+$k\geq2$\\
+Coefficient table and inverse map (Proposition~\ref{prop:coef}) &
+Binomial theorem & Every integer $k\geq2$\\
+No rational first integral (Lemma~\ref{lem:noint}) & Formal Laurent
+expansion and logarithmic derivatives & Every integer $k\geq2$\\
+Global identifiability (Theorem~\ref{thm:main}) & The above together with
+\cite[Theorem~4.7, Corollary~5.7, Proposition~3.1]{OPT} & Every integer
+$k\geq2$, generic parameters and initial values\\
+\midrule
+Coefficients, vector-field identity, recovery formulas &
+Exact computer algebra, two separately written implementations
+(Section~\ref{sec:checks}) & $k=1,\dots,12$ and $k=2,\dots,9$\\
+Uniqueness for one trajectory & Exact power series and linear algebra &
+$k=2,3,5$, one rational point\\
+\midrule
+Not claimed & Non-integer $k$; unknown $k$; an explicit description of
+the exceptional set; practical identifiability from finite or noisy
+data & \\
+\bottomrule
+\end{tabular}
+\caption{Claims and their basis. The finite computations in the lower
+part are checks of the general formulas and do not replace the proof.}
+\label{tab:status}
+\end{table}
+
+The proof depends on three results of \cite{OPT}, whose hypotheses we
+verify explicitly (Proposition~\ref{prop:charpres} and
+Lemma~\ref{lem:noint}). Everything else is ordinary commutative algebra.
+
+\section{Model and identifiability}
+\label{sec:model}
+Throughout, $k\geq2$ is a fixed integer, known to the observer. The
+parameters are $\mu=(\alpha,\beta,\gamma)$, and we write
+$K=\C(\alpha,\beta,\gamma)$ for the field of rational functions in them.
+We write initial values as $S(0)$, $I(0)$, $R(0)$.
+
+\paragraph{Reduction to two states.}
+The equations for $S$ and $I$ in \eqref{eq:model} do not contain $R$.
+If $(S,I,R)$ solves \eqref{eq:model} with $S+I+R=N_0$, then $(S,I)$ solves
+\begin{equation}
+ S'=-\frac{\beta SI}{u^k},\qquad
+ I'=\frac{\beta SI}{u^k}-\gamma I,\qquad u=1+\alpha I,
+ \qquad y=I,
+ \label{eq:two}
+\end{equation}
+and conversely a solution of \eqref{eq:two} together with $R=N_0-S-I$
+solves \eqref{eq:model}, since $(N_0-S-I)'=\gamma I$. Both have the same
+output. Hence $\alpha,\beta,\gamma,S(0),I(0),R(0)$ are identifiable for
+\eqref{eq:model} with known $N_0$ exactly when
+$\alpha,\beta,\gamma,S(0),I(0)$ are identifiable for \eqref{eq:two}, and
+then $R(0)=N_0-S(0)-I(0)$. The generic sets correspond under projection
+to $(\mu,S(0),I(0))$. Pant, Saucedo and Pogudin use the same reduction
+\cite[(S9.2)]{PSPsupp}, as does the authors' published code for $k=2$
+\cite{PSPcode}. Only the last step uses $N_0$.
+
+\paragraph{Identifiability.}
+We use the definition of \cite[Definition~2.2]{OPT}, specialized to a
+model without inputs. Write \eqref{eq:two} as $x'=f/Q$, $y=g/Q$ with
+$x=(S,I)$, $Q=u^k$, $f=(-\beta SI,\ \beta SI-\gamma Iu^k)$ and $g=Iu^k$.
+For $(\hat x_0,\hat\mu)\in\C^2\times\C^3$ with
+$Q(\hat x_0,\hat\mu)\neq0$, let $Y(\hat x_0,\hat\mu)$ be the output of the
+unique solution that is analytic near $t=0$.
+
+\begin{definition}
+\label{def:id}
+A rational function $h(x_0,\mu)$ is \emph{identifiable} if there is a
+nonempty Zariski open set $\Theta\subset\C^5$ such that, for every
+$(\hat x_0,\hat\mu)\in\Theta$ at which $h$ and $Q^{-1}$ are defined, every
+$(\tilde x_0,\tilde\mu)$ at which $h$ and $Q^{-1}$ are defined and with
+$Y(\tilde x_0,\tilde\mu)=Y(\hat x_0,\hat\mu)$ satisfies
+$h(\tilde x_0,\tilde\mu)=h(\hat x_0,\hat\mu)$. The model is
+\emph{globally identifiable} if each parameter and each component of
+$x_0$ is identifiable.
+\end{definition}
+
+Pant, Saucedo and Pogudin work over the reals with an open dense set of
+admissible points \cite[Definition~1]{PSP}. As they note
+\cite[Remark~4]{PSP}, identifiability over $\C$ implies identifiability
+over $\mathbb R$: the real points of a nonempty Zariski open subset of
+$\C^5$ form an open dense subset of $\mathbb R^5$, and a real competing
+point is also a complex one. The set of real points of $\Theta$,
+intersected with the region of positive parameters and populations, is
+open and dense in that region.
+Identifiability is a generic statement. For example, $I(0)=0$ gives the
+zero output, and $S(0)=0$ gives pure exponential decay, from which
+$\alpha$ and $\beta$ cannot be recovered.
+
+\section{The input--output equation}
+\label{sec:io}
+Let $D$ be the derivation of $L=K(S,I)$ defined by \eqref{eq:two}, with
+$D$ trivial on $K$; here $S$ and $I$ are independent indeterminates, and
+$\alpha,\beta,\gamma$, being indeterminates, are nonzero in $K$.
+This differential field is the field
+$\operatorname{Frac}(\C(\mu)\{x,y\}/I_\Sigma)$ of \cite{OPT}: with
+$I_\Sigma=[Qx'-f,\,Qy-g]:Q^\infty$ \cite[Notation~2.4]{OPT}, the ideal
+$I_\Sigma$ is prime and consists of the differential polynomials that
+vanish on all solutions \cite[Lemma~3.2]{HOPY}; see also the proof of
+\cite[Corollary~5.7]{OPT}. It is the kernel of the differential
+homomorphism $\C(\mu)\{x,y\}\to L$ sending $x$ to $(S,I)$ and $y$ to
+$I$: every differential polynomial is congruent modulo $I_\Sigma$,
+after multiplication by a power of $Q$, to a polynomial in $S,I$. If the
+original element maps to zero in $L$, that polynomial is zero, because
+$S$ and $I$ are algebraically independent over $K$; since $I_\Sigma$ is
+saturated with respect to $Q$, the element lies in $I_\Sigma$.
+
+Put $y=I$, $v=Dy$ and $w=D^2y$. The second equation of \eqref{eq:two}
+and $D(S+I)=-\gamma I$ give
+\begin{equation}
+ S=\frac{(v+\gamma y)\,u^k}{\beta y},\qquad DS=-(v+\gamma y).
+ \label{eq:S}
+\end{equation}
+Differentiating the first identity, substituting the second and
+multiplying by $\beta y^2$, we obtain $P(y,v,w)=0$ on the model, where
+\begin{equation}
+ P=y u^k w-\bigl(1-(k-1)\alpha y\bigr)u^{k-1}v^2
+ +\bigl(k\alpha\gamma y^2u^{k-1}+\beta y^2\bigr)v
+ +\beta\gamma y^3 .
+ \label{eq:P}
+\end{equation}
+Indeed, the derivative of $u^k$ contributes $k\alpha u^{k-1}v$; the
+$v^2$ terms combine through $k\alpha y-u=-(1-(k-1)\alpha y)$, and the two
+terms $\pm\gamma yu^kv$ cancel, leaving $k\alpha\gamma y^2u^{k-1}v$.
+
+\begin{lemma}
+\label{lem:irr}
+The elements $y$ and $v$ of $L$ are algebraically independent over $K$,
+and $P$ is irreducible in $K[y,v,w]$.
+\end{lemma}
+
+\begin{proof}
+The map $(S,I)\mapsto(y,v)$ with $v=\beta Sy/u^k-\gamma y$ is inverted by
+\eqref{eq:S}, so $K(S,I)=K(y,v)$, and $y,v$ are algebraically independent.
+Write $P=Aw+B$ with $A=yu^k$ and $B\in K[y,v]$. The only irreducible
+factors of $A$ in $K[y]$ are $y$ and $u=1+\alpha y$. From \eqref{eq:P},
+\[
+ B(0,v)=-v^2,\qquad
+ B(-1/\alpha,v)=\frac{\beta}{\alpha^2}\Bigl(v-\frac{\gamma}{\alpha}\Bigr),
+\]
+where the second identity uses $k\geq2$, so that every term containing
+$u^{k-1}$ vanishes at $u=0$. (For $k=1$ the value is also nonzero and the
+lemma still holds; we restrict to $k\geq2$ only for brevity.) Both are nonzero, so neither $y$ nor $u$
+divides $B$, and $\gcd(A,B)=1$. Thus $P$ is primitive and of degree one
+in $w$ over $K[y,v]$; it is irreducible over $K(y,v)$ and hence, by Gauss's
+lemma, in $K[y,v,w]$.
+\end{proof}
+
+\begin{proposition}
+\label{prop:charpres}
+Let $J=I_\Sigma\cap K\{y\}$, the kernel of the differential homomorphism
+$K\{y\}\to L$, $y\mapsto I$. For the ranking $y<y'<y''<\cdots$, the set
+$\{P\}$, with $y',y''$ in place of $v,w$, is a monic characteristic
+presentation of $J$ in the sense of \cite[Definition~5.4]{OPT}.
+\end{proposition}
+
+\begin{proof}
+$J$ is prime, being the kernel of a map to a field, and $P\in J$. In one
+differential indeterminate an autoreduced set has at most one element.
+The leader of $P$ is $y''$ and has degree one, so an element of $J$ of
+lower rank would lie in $K[y,y']$; by Lemma~\ref{lem:irr} there is no
+nonzero such element. Hence $\{P\}$ is a characteristic set of $J$
+\cite[Definition~5.3]{OPT}. Its non-leading variables are $y,y'$. The
+initial $A=yu^k$ lies in $K[y]\subset K[y,y']$, and, $P$ being irreducible
+and of positive degree in $y''$, $P$ has no factor in $K[y,y']\setminus K$.
+The coefficient of $yy''$ equals $1$, so $\{P\}$ is monic in the sense of
+\cite[Definition~5.4]{OPT}.
+\end{proof}
+
+By \cite[Corollary~5.7]{OPT}, the field of input--output identifiable
+functions is generated over $\C$ by the coefficients of $P$, as a
+polynomial in $y,y',y''$.
+
+\section{Coefficients and their inversion}
+\label{sec:coef}
+For a monomial $m$ in $y,v,w$ write $\coef{m}$ for its coefficient in
+$P$, and set $\binom nr=0$ outside $0\leq r\leq n$.
+
+\begin{proposition}
+\label{prop:coef}
+The coefficients of $P$, including those equal to zero, are
+\begin{equation}
+\begin{aligned}
+ \coef{y^{j+1}w}&=\binom kj\alpha^j, && 0\leq j\leq k,\\
+ \coef{y^{j+1}v}&=k\binom{k-1}{j-1}\gamma\alpha^j+\delta_{j1}\beta,
+   && 1\leq j\leq k,\\
+ \coef{y^{j}v^2}&=-\Bigl(\binom{k-1}{j}-(k-1)\binom{k-1}{j-1}\Bigr)\alpha^j,
+   && 0\leq j\leq k,\\
+ \coef{y^3}&=\beta\gamma,
+\end{aligned}
+\label{eq:table}
+\end{equation}
+and all other monomials have coefficient zero. In particular
+\begin{equation}
+ \coef{yw}=1,\quad \coef{y^2w}=k\alpha,\quad
+ \coef{y^2v}=\beta+k\alpha\gamma,\quad
+ \coef{y^3v}=k(k-1)\alpha^2\gamma,
+ \label{eq:four}
+\end{equation}
+and, for $\alpha\gamma\neq0$,
+\begin{equation}
+ \alpha=\frac{\coef{y^2w}}{k},\qquad
+ \gamma=\frac{\coef{y^3v}}{k(k-1)\alpha^2},\qquad
+ \beta=\coef{y^2v}-k\alpha\gamma .
+ \label{eq:inverse}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Expand $u^k$ and $u^{k-1}$ in \eqref{eq:P} by the binomial theorem. The
+$v^2$ coefficient is $-(u^{k-1}-(k-1)\alpha y\,u^{k-1})$, which gives the
+third line; the second line comes from $k\alpha\gamma y^2u^{k-1}$ and
+$\beta y^2$. Equations \eqref{eq:four} are the cases $j=0,1$ of the first
+line and $j=1,2$ of the second, and \eqref{eq:inverse} solves them
+successively.
+\end{proof}
+
+For instance, $\coef{yv^2}=0$ for every $k$. The denominators in
+\eqref{eq:inverse} are $k$ and $k(k-1)\alpha^2$, which are nonzero in $K$
+for every integer $k\geq2$. Since \eqref{eq:four} lies in the field
+generated by the coefficients and $\alpha,\beta,\gamma$ are rational in
+\eqref{eq:four}, Proposition~\ref{prop:charpres} and
+\cite[Corollary~5.7]{OPT} show that $\alpha$, $\beta$ and $\gamma$ are
+input--output identifiable, and that the field of input--output
+identifiable functions is all of $K$.
+
+For $k=1$ the coefficient $\coef{y^3v}$ vanishes, the field generated by
+\eqref{eq:table} is $\C(\alpha,\beta+\alpha\gamma,\beta\gamma)$, and the
+substitution $(\beta,\gamma)\mapsto(\alpha\gamma,\beta/\alpha)$ fixes all
+coefficients. This agrees with \cite[Theorem~3.8]{PSP};
+formulas~\eqref{eq:inverse} must not be applied for $k=1$.
+
+\section{No rational first integrals}
+\label{sec:noint}
+Input--output identifiability does not by itself imply identifiability
+\cite[Example~4.8]{OPT}. The bridge is the following lemma.
+
+\begin{lemma}
+\label{lem:noint}
+Let $k\geq2$. The constants of the
+differential field $(L,D)$, $L=K(S,I)$, are exactly $K$.
+\end{lemma}
+
+\begin{proof}
+Use the coordinates $S$ and $u=1+\alpha I$, so that $L=K(S,u)$, and the
+derivation $E=(u^k/I)\,D$. Since $u^k/I$ is a nonzero element of $L$,
+$E$ and $D$ have the same constants. By \eqref{eq:two},
+\begin{equation}
+ ES=-\beta S,\qquad Eu=\alpha\beta S-\alpha\gamma u^k,
+ \qquad
+ E=-\beta S\,\partial_S+(\alpha\beta S-\alpha\gamma u^k)\,\partial_u .
+ \label{eq:E}
+\end{equation}
+Let $0\neq F\in K(S,u)$ with $EF=0$. Embed $K(u)(S)$ into the field of
+formal Laurent series $K(u)((S))$; no convergence is needed. Write
+\[
+ F=\sum_{n\geq m} f_n(u)\,S^n,\qquad f_m\neq0 .
+\]
+Because $E$ does not lower the $S$-order, it extends termwise to
+$K(u)((S))$ compatibly with the embedding. The term $\alpha\beta
+S\,\partial_u$ raises the order by one, so the coefficient of $S^m$ in
+$EF$ is
+\begin{equation}
+ -\beta m f_m-\alpha\gamma u^k f_m'=0 .
+ \label{eq:lead}
+\end{equation}
+Suppose $m\neq0$. Then $f_m'\neq0$, and
+\[
+ \frac{f_m'}{f_m}=-\frac{\beta m}{\alpha\gamma}\,u^{-k}.
+\]
+Write $f_m=u^r h$ with $r\in\mathbb Z$ and $h\in K(u)$ having $u$-adic
+valuation zero. Then $f_m'/f_m=r/u+h'/h$ has $u$-adic valuation at least
+$-1$, while the right-hand side has valuation $-k\leq-2$. This
+contradiction shows $m=0$. Then \eqref{eq:lead} gives $f_0'=0$, so
+$f_0\in K$ because the characteristic is zero. Now $F-f_0$ is again a
+constant; if it were nonzero, its $S$-order would be a positive integer,
+which the same argument excludes. Hence $F=f_0\in K$.
+\end{proof}
+
+The order of the pole, $k$, is the only place where the exponent enters.
+For $k=1$ the right-hand side has a simple pole and the argument fails.
+The lemma concerns the two-state model: with three states, $S+I+R$ is a
+nonconstant rational first integral, and \cite[Theorem~4.7]{OPT} cannot
+be applied directly.
+
+\section{Proof of the main theorem}
+\label{sec:proof}
+\begin{theorem}
+\label{thm:main}
+Let $k\geq2$ be a fixed integer. For model \eqref{eq:model} with output
+$y=I$ and known $N_0=S(0)+I(0)+R(0)$, the parameters $\alpha,\beta,\gamma$
+and the initial values $S(0),I(0),R(0)$ are globally identifiable in the
+sense of Definition~\ref{def:id}. The parameters and $S(0),I(0)$ are
+identifiable without using $N_0$. Explicitly, $\alpha,\beta,\gamma$ are
+given by \eqref{eq:inverse} from the normalized minimal input--output
+equation, and
+\begin{equation}
+ S(t)=\frac{\bigl(y'(t)+\gamma y(t)\bigr)\bigl(1+\alpha y(t)\bigr)^k}
+           {\beta y(t)},\qquad I(t)=y(t),\qquad R(t)=N_0-S(t)-I(t)
+ \label{eq:states}
+\end{equation}
+near $t=0$, whenever $\beta I(0)(1+\alpha I(0))\neq0$.
+\end{theorem}
+
+\begin{proof}
+By the reduction in Section~\ref{sec:model} it suffices to treat the
+two-state model \eqref{eq:two}. By Lemma~\ref{lem:noint} the model has no
+rational first integral, that is, the constants of
+$\operatorname{Frac}(\C(\mu)\{x,y\}/I_\Sigma)=L$ are $\C(\mu)$. By
+\cite[Theorem~4.7]{OPT}, a function of the parameters is identifiable if
+and only if it is input--output identifiable. Section~\ref{sec:coef}
+shows that $\alpha,\beta,\gamma$ are input--output identifiable; hence
+they are identifiable.
+
+For the initial values we use the criterion
+\cite[Proposition~3.1]{OPT}: a rational function of $(x_0,\mu)$ is
+identifiable if and only if its image in $L$, with $S(0),I(0)$ replaced
+by $S,I$, lies in the subfield $M$ generated by the image of $\C\{y\}$,
+that is, by $I,DI,D^2I,\dots$. Applied to $\alpha,\beta,\gamma$ the
+criterion gives $\alpha,\beta,\gamma\in M$. By \eqref{eq:S},
+$S=(DI+\gamma I)(1+\alpha I)^k/(\beta I)\in M$, and $I\in M$. Therefore
+$S(0)$ and $I(0)$ are identifiable. Finally $R(0)=N_0-S(0)-I(0)$.
+
+Formula \eqref{eq:states} is \eqref{eq:S} evaluated on a solution. The
+condition $\beta I(0)(1+\alpha I(0))\neq0$ defines a nonempty Zariski open
+set; on it $y$ and $1+\alpha y$ do not vanish near $t=0$, so the right-hand
+side is defined there. Alternatively, analytically: once the parameters of any competing
+point agree with the true ones on the generic set, the same output gives
+the same right-hand side in \eqref{eq:states}, hence the same states.
+\end{proof}
+
+The theorem asserts uniqueness for generic, not for all, parameters and
+initial values. We do not determine the smallest exceptional set. In
+particular we do not claim that every point of an exceptional set is
+non-identifiable.
+
+\section{Finite exact checks}
+\label{sec:checks}
+The general argument above does not rely on computation. The following
+exact computations were carried out as checks of the formulas; they are
+finite and do not replace the proof.
+
+\begin{enumerate}
+\item \emph{Elimination from the vector field, $k=1,\dots,12$.} In a
+Python~3 program using only the standard library (sparse polynomials
+with integer coefficients and exact rationals), $S$ is eliminated from the relation that
+is linear in $S$, $\beta Sy-(v+\gamma y)u^k=0$, and its total derivative
+by a $2\times2$ resultant. The result agrees with \eqref{eq:table} in
+every monomial. Substituting the vector field into $P$ and clearing
+denominators gives the zero polynomial, as an identity rather than at
+sample points. The four coefficients \eqref{eq:four}, the values $B(0,v)$
+and $B(-1/\alpha,v)$ from Lemma~\ref{lem:irr}, and the coordinate form
+\eqref{eq:E} of the derivation were also checked. For $k=1$ the
+parameter points $(\alpha,\beta,\gamma)=(2,3,5)$ and $(2,10,3/2)$, related
+by the substitution of Section~\ref{sec:coef}, give identical
+coefficients; for $k=2,\dots,12$ they do not.
+\item \emph{Comparison with published equations.} The input--output
+equations printed in \cite[Section~S9]{PSPsupp} for $k=2,3,4$, obtained
+there with \mbox{StructuralIdentifiability.jl}, coincide term by term with
+$-P$.
+\item \emph{A separately written implementation.} A second check, written
+without reference to the first and using the computer algebra system
+SymPy~1.13.3, verifies \eqref{eq:P} on the model for $k=2,3,5$ and for symbolic $k$
+(treating $(1+\alpha I)^k$ as a separate symbol with the induced
+derivative), the coefficient table \eqref{eq:table} and the inverse
+\eqref{eq:inverse} for $k=2,\dots,9$, irreducibility of $P$ over
+$\mathbb Q(\alpha,\beta,\gamma)$ for $k=2,3,5$, and the leading-order
+identity \eqref{eq:lead}. For $k=2,3$ and random rational parameters it
+finds no nonconstant polynomial first integral of degree at most $6$ in
+$(S,u)$; this is consistent with Lemma~\ref{lem:noint} and is not a proof
+of it.
+\item \emph{One trajectory.} For $k=2,3,5$ and
+$(\alpha,\beta,\gamma,S(0),I(0))=(1/3,2/5,1/7,5/2,1/2)$, the solution of
+\eqref{eq:two} was computed as an exact rational power series to order
+$40$. Among the polynomials $\sum c_{ijl}\,y^i(y')^j(y'')^l$ with
+$i\leq k+1$ and $j+2l\leq2$, those vanishing on this trajectory form a
+one-dimensional space; normalizing $c_{101}=1$ and applying
+\eqref{eq:inverse} returns the original parameters exactly. Since the
+input--output equation of any competing parameter point lies in the same
+space of polynomials and has the same normalized coefficient, this
+computation shows directly that this particular trajectory determines the
+parameters.
+\end{enumerate}
+Scripts for these checks accompany this article, and the verification
+record lists their outputs. Each check runs in a few seconds.
+
+\section{Scope and remarks}
+\label{sec:scope}
+\paragraph{Integer exponents.}
+Conjecture~2 of \cite{PSP} is stated for $k\geq2$, and the model text
+calls $k\geq1$ the saturation exponent without restricting it to
+integers. Theorem~\ref{thm:main} covers every fixed integer $k\geq2$. For
+non-integer $k$ the right-hand side of \eqref{eq:model} is not rational,
+the framework of \cite{OPT} does not apply as stated, and we make no claim.
+We also do not treat $k$ as an unknown parameter to be recovered from the
+data.
+
+\paragraph{Relation to the large-$k$ sketch.}
+Remark~1 of \cite[Section~S9]{PSPsupp} obtains global identifiability for
+all $k$ outside an unspecified finite set from the software result for
+the augmented model. Theorem~\ref{thm:main} shows that no integer $k\geq2$
+is an exception to global identifiability, and
+Proposition~\ref{prop:coef} gives the recovery formulas explicitly.
+
+\paragraph{What is not addressed.}
+Structural identifiability concerns exact, continuous observation. The
+theorem says nothing about the stability of estimating $\alpha,\beta,\gamma$
+from finitely many noisy measurements, about the fit of
+\eqref{eq:model} to real epidemics, or about identifiability at the
+non-generic parameter values excluded above.
+
+\paragraph{Prior work.}
+A literature search limited to the preprint versions of \cite{PSP}, the
+authors' code and keyword searches found no other proof for general $k$;
+it was not exhaustive, and we do not claim priority beyond it. The
+argument is short once the results of \cite{OPT} are available, and it
+may be known to specialists in a different form.
+
+\section*{AI-use statement}
+AI systems assisted with the derivation and checking of the proof, the
+exact computer-algebra checks, independent readings of the proof and of
+the manuscript, literature organization and manuscript drafting. The
+author is responsible for the mathematical claims and their stated scope;
+AI systems are not authors.
+
+{\raggedright
+\begin{thebibliography}{9}
+\bibitem{PSP}
+B. Pant, O. Saucedo and G. Pogudin,
+``Uncovering identifiability of epidemiological models: basic
+reproduction number and complementary data streams,''
+medRxiv preprint, version 2 (posted 25 January 2026),
+\href{https://doi.org/10.64898/2026.01.16.26344284}{doi:10.64898/2026.01.16.26344284},
+\url{https://www.medrxiv.org/content/10.64898/2026.01.16.26344284v2}.
+
+\bibitem{PSPsupp}
+B. Pant, O. Saucedo and G. Pogudin,
+Supplementary material to \cite{PSP}, version 2, Sections S8 and S9,
+\url{https://www.medrxiv.org/content/medrxiv/early/2026/01/25/2026.01.16.26344284/DC1/embed/media-1.pdf}.
+
+\bibitem{PSPcode}
+B. Pant, code accompanying \cite{PSP}, GitHub repository
+\url{https://github.com/Binod-Pant/structural-identifiability-complementary},
+file \texttt{behavior~model/behavior\_local\_power\_two\_julia.jl},
+commit \nolinkurl{c2a43c695d4055b97b1d9dd3cedd6e7e56b7b8ff}.
+
+\bibitem{OPT}
+A. Ovchinnikov, G. Pogudin and P. Thompson,
+``Parameter identifiability and input--output equations,''
+\emph{Appl. Algebra Engrg. Comm. Comput.} \textbf{34}(2), 165--182 (2023;
+published online 2021),
+\href{https://doi.org/10.1007/s00200-021-00486-8}{doi:10.1007/s00200-021-00486-8};
+\href{https://arxiv.org/abs/2007.14787v2}{arXiv:2007.14787v2} (2020).
+Theorem, definition and corollary numbers in this article refer to
+arXiv:2007.14787v2.
+
+\bibitem{HOPY}
+H. Hong, A. Ovchinnikov, G. Pogudin and C. Yap,
+``Global identifiability of differential models,''
+\emph{Comm. Pure Appl. Math.} \textbf{73}(9), 1831--1879 (2020),
+\href{https://doi.org/10.1002/cpa.21921}{doi:10.1002/cpa.21921};
+\href{https://arxiv.org/abs/1801.08112v5}{arXiv:1801.08112v5}.
+The lemma number refers to arXiv:1801.08112v5.
+\end{thebibliography}
+}
+\end{document}

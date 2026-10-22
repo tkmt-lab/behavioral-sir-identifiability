@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "pages": 7,
+  "pdf_sha256": "1e1b990743b7e6854bf7efeeecf774c58b19e8bb5d9856378ca5b08fafc70661",
+  "source_sha256": "c84d2d8e0572f900ee4070ff7da4e6028e98f572b6d5263dcb50dd256f9013a1",
+  "overfull_boxes": false,
+  "undefined_references": false,
+  "unresolved_marks": false,
+  "engine": "Tectonic",
+  "all_pages_viewed": true,
+  "visual_inspection": {
+    "resolution_dpi": 80,
+    "checked": "clipping, overfull lines, equation layout, table alignment, theorem numbering, cross-references, reference list and readability; each page viewed; renders are also pixel-identical to the renders of the inspected v1.1 study PDF"
+  }
+}

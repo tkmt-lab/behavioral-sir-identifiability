@@ -1,0 +1,55 @@
+PASS P(3) vanishes on model, k=2
+PASS P(4) vanishes on model, k=2
+PASS (3)-(4)==0, k=2
+PASS P(3) vanishes on model, k=3
+PASS P(4) vanishes on model, k=3
+PASS (3)-(4)==0, k=3
+PASS P(3) vanishes on model, k=5
+PASS P(4) vanishes on model, k=5
+PASS (3)-(4)==0, k=5
+PASS P(3) vanishes on model, symbolic k
+PASS P(4) vanishes on model, symbolic k
+PASS (7) table exact and exhaustive, k=2
+PASS (9) inverse map, k=2
+PASS (7) table exact and exhaustive, k=3
+PASS (9) inverse map, k=3
+PASS (7) table exact and exhaustive, k=4
+PASS (9) inverse map, k=4
+PASS (7) table exact and exhaustive, k=5
+PASS (9) inverse map, k=5
+PASS (7) table exact and exhaustive, k=6
+PASS (9) inverse map, k=6
+PASS (7) table exact and exhaustive, k=7
+PASS (9) inverse map, k=7
+PASS (7) table exact and exhaustive, k=8
+PASS (9) inverse map, k=8
+PASS (7) table exact and exhaustive, k=9
+PASS (9) inverse map, k=9
+PASS Q(0,v)=-v^2, k=2
+PASS Q(-1/a,v), k=2
+PASS P irreducible in Q[a,b,g,y,v,w], k=2
+PASS Q(0,v)=-v^2, k=3
+PASS Q(-1/a,v), k=3
+PASS P irreducible in Q[a,b,g,y,v,w], k=3
+PASS Q(0,v)=-v^2, k=5
+PASS Q(-1/a,v), k=5
+PASS P irreducible in Q[a,b,g,y,v,w], k=5
+PASS k=1: [y^3 v]P = 0 (d3 vanishes)
+PASS (10) ES=-bS, k=2
+PASS (10) Eu, k=2
+PASS (12) leading coefficient, k=2
+PASS (10) ES=-bS, k=3
+PASS (10) Eu, k=3
+PASS (12) leading coefficient, k=3
+PASS (10) ES=-bS, k=5
+PASS (10) Eu, k=5
+PASS (12) leading coefficient, k=5
+PASS (10) ES=-bS, k=k
+PASS (10) Eu, k=k
+PASS (12) leading coefficient, k=k
+PASS no poly first integral deg<=6, k=2
+PASS no poly first integral deg<=6, k=3
+PASS one trajectory: nullspace dim 1, params recovered exactly, k=2
+PASS one trajectory: nullspace dim 1, params recovered exactly, k=3
+PASS one trajectory: nullspace dim 1, params recovered exactly, k=5
+ALL PASS

@@ -1,0 +1,39 @@
+[1] P vanishes on model (exact k=1..8; symbolic-k expr at rational points): True
+[1b] derived relation minus P (symbolic k): 0
+[2] k=1: table mismatches=[], four=(1, alpha, alpha*gamma + beta, 0), inverse ok=True, [y v^2]=0
+[2] k=2: table mismatches=[], four=(1, 2*alpha, 2*alpha*gamma + beta, 2*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=3: table mismatches=[], four=(1, 3*alpha, 3*alpha*gamma + beta, 6*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=4: table mismatches=[], four=(1, 4*alpha, 4*alpha*gamma + beta, 12*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=5: table mismatches=[], four=(1, 5*alpha, 5*alpha*gamma + beta, 20*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=6: table mismatches=[], four=(1, 6*alpha, 6*alpha*gamma + beta, 30*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=7: table mismatches=[], four=(1, 7*alpha, 7*alpha*gamma + beta, 42*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=8: table mismatches=[], four=(1, 8*alpha, 8*alpha*gamma + beta, 56*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=9: table mismatches=[], four=(1, 9*alpha, 9*alpha*gamma + beta, 72*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=10: table mismatches=[], four=(1, 10*alpha, 10*alpha*gamma + beta, 90*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=11: table mismatches=[], four=(1, 11*alpha, 11*alpha*gamma + beta, 110*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2] k=12: table mismatches=[], four=(1, 12*alpha, 12*alpha*gamma + beta, 132*alpha**2*gamma), inverse ok=True, [y v^2]=0
+[2b] (symbolic-k series skipped; integer table covers 1..12)
+[3] k=2: content=1, factors over Q[a,b,g][y,v,w]: 1 -> nonconstant in (y,v,w): 1
+     B(0,v)=-v**2, B(-1/a,v)=beta*(alpha*v - gamma)/alpha**3
+[3] k=3: content=1, factors over Q[a,b,g][y,v,w]: 1 -> nonconstant in (y,v,w): 1
+     B(0,v)=-v**2, B(-1/a,v)=beta*(alpha*v - gamma)/alpha**3
+[3] k=4: content=1, factors over Q[a,b,g][y,v,w]: 1 -> nonconstant in (y,v,w): 1
+     B(0,v)=-v**2, B(-1/a,v)=beta*(alpha*v - gamma)/alpha**3
+[3] k=5: content=1, factors over Q[a,b,g][y,v,w]: 1 -> nonconstant in (y,v,w): 1
+     B(0,v)=-v**2, B(-1/a,v)=beta*(alpha*v - gamma)/alpha**3
+[3] k=6: content=1, factors over Q[a,b,g][y,v,w]: 1 -> nonconstant in (y,v,w): 1
+     B(0,v)=-v**2, B(-1/a,v)=beta*(alpha*v - gamma)/alpha**3
+[4] k=2: ES+beta S=0, Eu-(..)=0
+[4] k=3: ES+beta S=0, Eu-(..)=0
+[4] k=5: ES+beta S=0, Eu-(..)=0
+[4] k=k: ES+beta S=0, Eu-(..)=0
+[5] k=1: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): True
+[5] k=2: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): False
+[5] k=3: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): False
+[5] k=4: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): False
+[5] k=5: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): False
+[5] k=6: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): False
+[5] k=7: coefficients invariant under (beta,gamma)->(alpha gamma, beta/alpha): False
+[6] k=2: nullity=1, recovered (a,b,g)=(1/3,2/5,1/7), S0=5/2
+[6] k=3: nullity=1, recovered (a,b,g)=(1/3,2/5,1/7), S0=5/2
+ALL OK
